@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.sdo</groupId>
     <artifactId>sdo</artifactId>
-    <version>1.8</version>
+    <version>1.9-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
@@ -45,7 +45,7 @@
     <dependency>
       <groupId>org.sdo</groupId>
       <artifactId>protocol</artifactId>
-      <version>1.8</version>
+      <version>1.9-SNAPSHOT</version>
     </dependency>
 
     <dependency>
