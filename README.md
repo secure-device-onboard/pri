@@ -1,3 +1,6 @@
+
+## NOTE: The "protocol-next" branch of the PRI repositoriry is work-in-progress in support of the next-generation SDO protocol.  It is not intended for use in production.
+
 # Secure Device Onboard (SDO)Quick Start
 
 ## Building SDO
