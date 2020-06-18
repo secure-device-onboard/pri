@@ -56,7 +56,7 @@ When the demo finishes, the log files would be avaialble in respective folders.
 Different properties used in the demo are specified in respective
 application.properties file. A brief description for each of these fields are
 provided within the configuration file. For more details, please refer to the
-file application.properties.sample provided under 'cri' folder in source
+file application.properties.sample provided under 'pri' folder in source
 package.
 
 # Working with new Ownership Voucher/Ownership Credentials pairs
