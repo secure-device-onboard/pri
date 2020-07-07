@@ -71,7 +71,12 @@ public enum KeyType {
    *
    * @see <a href=https://01.org/epid-sdk>The Intel EPID SDK</a>
    */
-  EPIDV2_0(92);
+  EPIDV2_0(92),
+  /**
+   * DAL ECDSA.
+   *
+   */
+  DAL_ECDSA(93);
 
   private int value;
 

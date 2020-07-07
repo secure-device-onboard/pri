@@ -22,6 +22,7 @@ import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.cert.CertPath;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.interfaces.RSAPublicKey;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -70,6 +71,7 @@ public class OwnerService implements ProtocolService, Serializable {
   private Iterator<Supplier<ServiceInfo>> myServiceInfoIterator = null;
   private transient Collection<ServiceInfoModule> myServiceInfoModules = List.of();
   private transient Function<KeyType, KeyPair> myKeysProvider = null;
+  private transient OnDieCache onDieCache = null;
 
   @Override
   public boolean isDone() {
@@ -117,6 +119,10 @@ public class OwnerService implements ProtocolService, Serializable {
   public void setServiceInfoModules(Collection<ServiceInfoModule> serviceInfoModules) {
     myServiceInfoModules =
         Collections.unmodifiableList(List.copyOf(Objects.requireNonNull(serviceInfoModules)));
+  }
+
+  public void setOnDieCache(OnDieCache onDieCache) {
+    this.onDieCache = Objects.requireNonNull(onDieCache);
   }
 
   private KeyExchange buildAsym2KKeyExchange() {
@@ -557,6 +563,16 @@ public class OwnerService implements ProtocolService, Serializable {
         }
       } catch (IOException | InterruptedException | URISyntaxException e) {
         throw fail(ErrorCode.InternalError, to2ProveDevice.getType(), e.getMessage());
+      }
+    } else if (devicePk instanceof OnDieKey) {
+      try {
+        isVerified = OnDieSignatureValidator.validateWithRevocations(
+                signatureBlock.getBo(),
+                signatureBlock.getSg(),
+                myOwnershipVoucher.getDc(),
+                onDieCache);
+      } catch (CertificateException ex) {
+        throw fail(ErrorCode.InternalError, to2ProveDevice.getType(), ex.getMessage());
       }
     } else {
       try {

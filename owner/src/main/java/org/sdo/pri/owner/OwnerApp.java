@@ -57,6 +57,7 @@ import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.sdo.pri.Error;
 import org.sdo.pri.KeyType;
 import org.sdo.pri.ObjectStorage;
+import org.sdo.pri.OnDieCache;
 import org.sdo.pri.OwnerService;
 import org.sdo.pri.OwnershipVoucher;
 import org.sdo.pri.OwnershipVoucherParser;
@@ -91,6 +92,9 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
   private URI myOwnerKeyUri = null;
   private Path myOwnershipProxyDir = Paths.get(".");
   private List<String> mySecureRandomAlgorithms = List.of("NativePRNG", "Windows-PRNG", "SHA1PRNG");
+  private String myOnDieCacheDir = "";
+  private boolean myOnDieAutoUpdate = false;
+  private String myOnDieSourceUrl = "";
 
   // A common point for spring boot config, as we must do it from both main() and configure().
   private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
@@ -228,6 +232,13 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
     return (voucher) -> null;
   }
 
+  @Bean
+  OnDieCache getOnDieCache() throws Exception {
+    return new OnDieCache(this.myOnDieCacheDir,
+            this.myOnDieAutoUpdate,
+            this.myOnDieSourceUrl);
+  }
+
   // The HTTP client to be used by the protocol service for outgoing connections.
   // If we don't have to verify EPID signatures, we don't need this.
   @Bean
@@ -241,7 +252,7 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
   private OwnerService initOwnerService(OwnerService ownerService)
       throws NoSuchAlgorithmException,
       KeyManagementException,
-      MalformedURLException {
+      IOException, Exception {
 
     Function<KeyType, PrivateKey> privateKeyProvider = privateKeyProvider();
     Function<KeyType, PublicKey> publicKeyProvider = publicKeyProvider();
@@ -256,6 +267,7 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
     ownerService.setG3Function(g3Function());
     ownerService.setR3Function(r3Function());
     ownerService.setDeviceErrorHandler(deviceErrorHandler());
+    ownerService.setOnDieCache(getOnDieCache());
     return ownerService;
   }
 
@@ -501,6 +513,21 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
     if (null != secureRandomAlgorithms && !secureRandomAlgorithms.isEmpty()) {
       this.mySecureRandomAlgorithms = secureRandomAlgorithms;
     }
+  }
+
+  @Value("${org.sdo.ondiecache.cachedir:}")
+  void setOnDieCacheDir(String cacheDir) {
+    this.myOnDieCacheDir = cacheDir;
+  }
+
+  @Value("${org.sdo.ondiecache.autoupdate:false}")
+  void setOnDieAutoUpdate(boolean myOnDieAutoUpdate) {
+    this.myOnDieAutoUpdate = myOnDieAutoUpdate;
+  }
+
+  @Value("${org.sdo.ondiecache.sourceUrl:}")
+  void setOnDieSourceUrl(String sourceUrlList) throws MalformedURLException {
+    this.myOnDieSourceUrl = sourceUrlList;
   }
 
   // The SSLContext for our HttpClient.

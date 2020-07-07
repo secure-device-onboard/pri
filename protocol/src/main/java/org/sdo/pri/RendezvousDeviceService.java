@@ -211,10 +211,16 @@ public class RendezvousDeviceService implements ProtocolService, Serializable {
             to1ProveToSdo.getAi()));
       } else if (pk instanceof EpidKey20) {
         isVerified = (EpidLib.EpidStatus.kEpidNoErr.getValue() == buildEpidLib().verify20Signature(
-            pk.getEncoded(),
-            EpidLib.HashAlg.KSHA256.getValue(),
-            signatureBlock.getSg(),
-            Buffers.unwrap(US_ASCII.encode(signatureBlock.getBo()))));
+                pk.getEncoded(),
+                EpidLib.HashAlg.KSHA256.getValue(),
+                signatureBlock.getSg(),
+                Buffers.unwrap(US_ASCII.encode(signatureBlock.getBo()))));
+      } else if (pk instanceof OnDieKey) {
+        // OnDie ECDSA signature verification
+        isVerified = OnDieSignatureValidator.validateWithoutRevocations(
+                signatureBlock.getBo(),
+                signatureBlock.getSg(),
+                myRedirectionEntry.getDevicePk());
       } else {
         isVerified = Signatures.verify(signatureBlock.getBo(), signatureBlock.getSg(), pk);
       }
