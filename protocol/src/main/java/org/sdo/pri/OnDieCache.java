@@ -30,7 +30,7 @@ public class OnDieCache {
 
   private boolean autoUpdate = false;
 
-  private String cacheDir = "";
+  private String cacheDir = null;
 
   private List<URL> sourceUrl = new ArrayList<URL>();
 
@@ -60,24 +60,23 @@ public class OnDieCache {
       // defaults: the public facing sites containing OnDie artifacts
       this.sourceUrl.add(new URL("https://tsci.intel.com/content/OnDieCA/crls/"));
     }
-    if (cacheDir == null) {
-      throw new IOException("OnDieCertCache: cache directory not specified.");
-    }
-    File cache = new File(cacheDir);
-    if (!cache.exists()) {
-      throw new IOException("OnDieCertCache: cache directory does not exist: " + cacheDir);
-    }
-    if (!cache.isDirectory()) {
-      throw new IOException("OnDieCertCache: cache directory must be a directory: " + cacheDir);
-    }
+    if (cacheDir != null) {
+      File cache = new File(cacheDir);
+      if (!cache.exists()) {
+        throw new IOException("OnDieCache: cache directory does not exist: " + cacheDir);
+      }
+      if (!cache.isDirectory()) {
+        throw new IOException("OnDieCache: cache directory must be a directory: " + cacheDir);
+      }
 
-    this.cacheDir = cacheDir;
-    this.autoUpdate = autoUpdate;
-    if (autoUpdate) {
-      // update local cache
-      copyFromUrlSources();
+      this.cacheDir = cacheDir;
+      this.autoUpdate = autoUpdate;
+      if (autoUpdate) {
+        // update local cache
+        copyFromUrlSources();
+      }
+      loadCacheMap();
     }
-    loadCacheMap();
   }
 
 

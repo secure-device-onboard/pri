@@ -515,7 +515,7 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
     }
   }
 
-  @Value("${org.sdo.ondiecache.cachedir:}")
+  @Value("${org.sdo.ondiecache.cachedir:#{null}}")
   void setOnDieCacheDir(String cacheDir) {
     this.myOnDieCacheDir = cacheDir;
   }
