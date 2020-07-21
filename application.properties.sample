@@ -239,6 +239,43 @@ org.sdo.owner.key =
 
 # org.sdo.owner.proxy-dir =
 
+
+# *** OnDie ECDSA configuration settings ***
+# In typical environments, only sdo.ondiecache.cachedir and sdo.ondiecache.autoupdate are used
+# and only when supporting OnDie ECDSA devices.
+
+# property:    sdo.ondiecache.cachedir
+# specifies the directory where OnDie cache files are located
+# Type:        java.nio.file.Path
+# Defaults-To: no default
+# Affects:     TO2
+# Example:     sdo.ondiecache.cachedir = /usr/lib/share/ondiecache
+# sdo.ondiecache.cachedir = 
+
+# property:    sdo.ondiecache.autoupdate
+# Set this to true or false to enable autoupdate of cachedir from urlsources
+# Type:        boolean
+# Defaults-To: false
+# Affects:     TO2
+# sdo.ondiecache.autoupdate = true
+
+# property:    sdo.ondiecache.urlsources
+# Comma separate list of urls containing cert and CRL files for OnDie ECDSA. This should only be needed when
+# debugging or working with pre-production hardware. 
+# Type:        string
+# Defaults-To: https://tsci.intel.com/content/OnDieCA/certs/,https://tsci.intel.com/content/OnDieCA/crls/
+# Affects:     TO2
+# sdo.ondiecache.urlsources = https://tsci.intel.com/content/OnDieCA/certs/,https://tsci.intel.com/content/OnDieCA/crls/
+
+# property:    sdo.ondiecache.revocations
+# Set this to true or false to enable revocation checking of OnDie ECDSA signatures. This should not be
+# used in production environments and only used when debugging or working with pre-production hardware.
+# Type:        boolean
+# Defaults-To: true
+# Affects:     TO2
+# sdo.ondiecache.revocations = false
+
+
 ###############################################################################
 
 # The value of TO0.OwnerSign.to0d.ws to send when registering proxies in TO0.
