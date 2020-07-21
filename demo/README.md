@@ -1,5 +1,7 @@
 # Secure Device Onboard (SDO) out-of-the-box demo
 
+**NOTE**: The Protocol Reference Implementation (PRI) out-of-the-box demo is provided solely to demonstrate the operation of the Secure Device Onboard protocol and interworking of the PRI Demo Device, Demo Owner, Demo Rendezvous service, with use of Supply Chain Tools for device configuration.   _This demo is not recommended for use in any production capacity._  Appropriate security measures with respect to key-store management and configuration management should be considered while performing production deployment of any Secure Device Onboard component.
+
 The out-of-the-box demo contains scripts and configuration files to run SDO services.
 
 The SDO out-of-the-box demo is organized according to the following directory structure:
