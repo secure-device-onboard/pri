@@ -243,6 +243,14 @@ org.sdo.owner.key =
 # *** OnDie ECDSA configuration settings ***
 # In typical environments, only sdo.ondiecache.cachedir and sdo.ondiecache.autoupdate are used
 # and only when supporting OnDie ECDSA devices.
+# The cachedir is used to store CRL files and can be populated by either setting autoupdate to true
+# or by running the provided script (onDieCache.py) to load the directory with CRL files from the cloud.
+# If autoupdate is set to true the owner application will load the cache upon startup. However, if operating
+# in OnPrem mode then this is not possible so the script should be used. To run the script, python must be installed.
+# Invoke as follows: python onDieCache.py CACHEDIR
+# where CACHEDIR = target location to store CRL files. Typically, this will match the value of sdo.ondiecache.cachedir.
+# However, it is also possible to run the script on a different host and then copy the downloaded files into sdo.ondiecache.cachedir.
+# The exact setup will vary depending on the runtime environment and user needs.
 
 # property:    sdo.ondiecache.cachedir
 # specifies the directory where OnDie cache files are located
