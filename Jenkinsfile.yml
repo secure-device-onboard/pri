@@ -65,18 +65,18 @@ node('ubuntu18.04-OnDemand'){
         print "PRI smoke Tests with client-sdk Device PRI RV, SCT-Manufacturer"
         sh '''
           cd sdo-test
-          mvn clean test -Dgroups=CdeviceTests
+          mvn clean verify -Dgroups=CdeviceTests
         '''
         print "PRI smoke Tests with PRI-RV and Device, IOT Owner"
         sh '''
           cd sdo-test
           mkdir voucher
-          mvn clean test -Dgroups=docker_oc_crirv_smoketest
+          mvn clean verify -Dgroups=docker_oc_crirv_smoketest
         '''
         print "Supply-chain-tools smoke Tests to onboard PRI"
         sh '''
           cd sdo-test
-          mvn clean test -Dgroups=CriDeviceSmokeTests
+          mvn clean verify -Dgroups=CriDeviceSmokeTests
         '''
       }
     } finally {
