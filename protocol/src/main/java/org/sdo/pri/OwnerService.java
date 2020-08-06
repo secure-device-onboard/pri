@@ -72,6 +72,7 @@ public class OwnerService implements ProtocolService, Serializable {
   private transient Collection<ServiceInfoModule> myServiceInfoModules = List.of();
   private transient Function<KeyType, KeyPair> myKeysProvider = null;
   private transient OnDieCache onDieCache = null;
+  private transient boolean onDieRevocations = true;
 
   @Override
   public boolean isDone() {
@@ -123,6 +124,10 @@ public class OwnerService implements ProtocolService, Serializable {
 
   public void setOnDieCache(OnDieCache onDieCache) {
     this.onDieCache = Objects.requireNonNull(onDieCache);
+  }
+
+  public void setOnDieRevocations(boolean onDieRevocations) {
+    this.onDieRevocations = onDieRevocations;
   }
 
   private KeyExchange buildAsym2KKeyExchange() {
@@ -570,7 +575,8 @@ public class OwnerService implements ProtocolService, Serializable {
                 signatureBlock.getBo(),
                 signatureBlock.getSg(),
                 myOwnershipVoucher.getDc(),
-                onDieCache);
+                onDieCache,
+                this.onDieRevocations);
       } catch (CertificateException ex) {
         throw fail(ErrorCode.InternalError, to2ProveDevice.getType(), ex.getMessage());
       }

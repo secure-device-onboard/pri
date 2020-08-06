@@ -95,6 +95,7 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
   private String myOnDieCacheDir = "";
   private boolean myOnDieAutoUpdate = false;
   private String myOnDieSourceUrl = "";
+  private boolean myOnDieRevocations = true;
 
   // A common point for spring boot config, as we must do it from both main() and configure().
   private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
@@ -268,6 +269,7 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
     ownerService.setR3Function(r3Function());
     ownerService.setDeviceErrorHandler(deviceErrorHandler());
     ownerService.setOnDieCache(getOnDieCache());
+    ownerService.setOnDieRevocations(this.myOnDieRevocations);
     return ownerService;
   }
 
@@ -528,6 +530,11 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
   @Value("${org.sdo.ondiecache.sourceUrl:}")
   void setOnDieSourceUrl(String sourceUrlList) throws MalformedURLException {
     this.myOnDieSourceUrl = sourceUrlList;
+  }
+
+  @Value("${org.sdo.ondiecache.revocations:true}")
+  void setOnDieRevocations(boolean myOnDieRevocations) {
+    this.myOnDieRevocations = myOnDieRevocations;
   }
 
   // The SSLContext for our HttpClient.
