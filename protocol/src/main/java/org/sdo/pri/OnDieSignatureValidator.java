@@ -89,13 +89,14 @@ public abstract class OnDieSignatureValidator {
           String signedData,
           byte[] signature,
           CertPath certPath,
-          OnDieCache onDieCache) throws CertificateException {
+          OnDieCache onDieCache,
+          boolean revocationsEnabled) throws CertificateException {
 
     // Check revocations first.
     List<Certificate> certificateList = (List<Certificate>) certPath.getCertificates();
 
     // Check revocations first.
-    if (!checkRevocations(certificateList, onDieCache)) {
+    if (revocationsEnabled && !checkRevocations(certificateList, onDieCache)) {
       return false;
     }
 
@@ -178,6 +179,7 @@ public abstract class OnDieSignatureValidator {
                     GeneralNames.getInstance(dp.getDistributionPoint().getName()).getNames();
             for (GeneralName generalName : generalNames) {
               byte[] crlBytes = onDieCache.getCrl(generalName.getName().toString());
+
               if (crlBytes == null) {
                 LoggerFactory.getLogger(OnDieSignatureValidator.class).warn(
                         "CRL not found in cache for: " + generalName.getName().toString());

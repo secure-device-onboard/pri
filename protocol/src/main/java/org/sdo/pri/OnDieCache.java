@@ -136,6 +136,8 @@ public class OnDieCache {
     if (cacheDir != null) {
       File cache = new File(cacheDir);
 
+      LoggerFactory.getLogger(getClass()).info("OnDieCache: loading cache from " + cacheDir);
+
       // Read each file and load into the hashmap
       File[] files = new File(cache.getAbsolutePath()).listFiles();
       if (files != null) {
@@ -147,6 +149,8 @@ public class OnDieCache {
           }
         }
       }
+      LoggerFactory.getLogger(
+          getClass()).info("OnDieCache: loaded cache with " + cacheMap.size() + " items.");
     }
   }
 

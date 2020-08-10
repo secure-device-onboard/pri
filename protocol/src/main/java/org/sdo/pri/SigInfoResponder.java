@@ -45,6 +45,11 @@ class SigInfoResponder {
             ByteBuffer.wrap(epidLib.getEpidInfo20_eB(Buffers.unwrap(ea.getInfo()))));
       }
 
+      case ONDIE_ECDSA_384: {
+        // ONDIE types use an empty EPIDInfo
+        return new SigInfo(ea.getSgType(), ByteBuffer.allocate(0));
+      }
+
       default:
         throw new UnsupportedOperationException(ea.getSgType().toString());
     }

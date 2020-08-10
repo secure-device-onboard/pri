@@ -40,6 +40,10 @@ class PublicKeyCodec {
           key = new PkRmeCodec().decoder().apply(in);
           break;
 
+        case ONDIE_ECDSA:
+          key = new PkOnDieCodec().decoder().apply(in);
+          break;
+
         case EPID:
           byte[] keyBytes = new PkEpidCodec().decoder().apply(in).getEncoded();
           switch (pkType) {
@@ -101,6 +105,7 @@ class PublicKeyCodec {
           break;
 
         case RSAMODEXP:
+        case ONDIE_ECDSA:
           new PkRmeCodec().encoder().apply(writer, value);
           break;
 
