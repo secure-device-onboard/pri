@@ -10,27 +10,27 @@ build and assume familiarity with
 To build SDO, run `mvn package` from the root directory of the SDO source.
 The build creates files which will be used in the rest of this guide, including:
 
-`device/target/device-1.8.jar`
+`device/target/device-1.9-SNAPSHOT.jar`
 
 An implementation of the SDO Device described in the Secure Device Onboard Protocol 
-Specification v1.13b, section 2.3.  Referred to in this document as 'the device', this JAR
+Specification v1.13b, section 2.3.  referred to in this document as 'the device', this JAR
 can be executed via the `java -jar` command.
 
-`owner/target/owner-1.8.war`
+`owner/target/owner-1.9-SNAPSHOT.war`
 
 An implementation of the SDO Owner Server described in the Secure Device Onboard Protocol 
-Specification v1.13b, section 2.3.  Referred to in this document as 'the owner server', this WAR
+Specification v1.13b, section 2.3.  referred to in this document as 'the owner server', this WAR
 can be deployed in a servlet container like [Apache Tomcat](http://tomcat.apache.org/)
 or executed via the `java -jar` command.
 
-`rendezvous/target/rendezvous-1.8.war`
+`rendezvous/target/rendezvous-1.9-SNAPSHOT.war`
 
 An implementation of the SDO Rendezvous Server described in the Secure Device Onboard Protocol 
 Specification v1.13b, section 2.3.  Referred to in this document as 'the rendezvous server', this 
 WAR can be deployed in a servlet container like [Apache Tomcat](http://tomcat.apache.org/)
 or executed via the `java -jar` command.
 
-`to0client/target/to0client-1.8.jar`
+`to0client/target/to0client-1.9-SNAPSHOT.jar`
 
 An implementation of the SDO Owner Client described in the Secure Device Onboard Protocol 
 Specification v1.13b, section 2.3.  Referred to in this document as 'the owner client', this JAR
@@ -121,7 +121,16 @@ mysql --host=sdo.example --user=sdo --password=never_use_this_password << EOF
 call rt_add_customer_public_key("README owner", "$(openssl x509 -in owner.crt -pubkey -noout)");
 EOF
 ```
+NOTE: Make sure that the key being assigned in this step is in the correct format.
 
+For Example:
+```
+ec_384:
+-----BEGIN PUBLIC KEY-----
+YOUR KEY GOES HERE
+-----END PUBLIC KEY-----
+
+```
 ### Preparing Working Directories
 
 The SDO device and owner will not output files unless provided a location to do so.
@@ -190,7 +199,7 @@ org.sdo.secure-random = SHA1PRNG
 org.sdo.to0.ownersign.to1d.bo.port1 = 8042
 ```
 
-More properties than these are available, but these are enough for basic operation.
+More properties are available, but these are enough for basic operation.
 Advanced settings and information are available in `application.properties.sample`.
 
 ## Running SDO
@@ -316,6 +325,16 @@ You will need this information to onboard the device.  In the example above, the
 serial number is `12345678` and the device credentials are in
 `./sdo-data/616d5ba0-d139-426f-9cbf-4997d644268a.oc`.
 
+### Extending the device to Customer
+
+Run the procedure ```rt_assign_device_to_customer``` to assign the generated voucher to the README owner you identified in the earlier steps.
+For example:
+```
+mysql --host=sdo.example --user=sdo --password=never_use_this_password << EOF
+call rt_assign_device_to_customer('12345678', 'README owner');
+EOF
+
+```
 ### Downloading the Ownership Voucher
 
 Once the device has been initialized, the SDO Manufacturer Toolkit can supply our owner's
