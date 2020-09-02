@@ -1,6 +1,6 @@
-# Secure Device Onboard (SDO) out-of-the-box demo
+# Secure Device Onboard (SDO) out-of-the-box Demo
 
-**NOTE**: The Protocol Reference Implementation (PRI) out-of-the-box demo is provided solely to demonstrate the operation of the Secure Device Onboard protocol and interworking of the PRI Demo Device, Demo Owner, Demo Rendezvous service, with use of Supply Chain Tools for device configuration.   _This demo is not recommended for use in any production capacity._  Appropriate security measures with respect to key-store management and configuration management should be considered while performing production deployment of any Secure Device Onboard component.
+***NOTE***: The Protocol Reference Implementation (PRI) out-of-the-box demo is provided solely to demonstrate the operation of the Secure Device Onboard protocol and interworking of the PRI Demo Device, Demo Owner, Demo Rendezvous service, with use of Supply Chain Tools for device configuration.   _This demo is not recommended for use in any production capacity._  Appropriate security measures with respect to key-store management and configuration management should be considered while performing production deployment of any Secure Device Onboard component.
 
 The out-of-the-box demo contains scripts and configuration files to run SDO services.
 
@@ -12,11 +12,11 @@ The SDO out-of-the-box demo is organized according to the following directory st
         ├── owner        : Demo Owner
         └── rendezvous   : Demo Rendezvous service
 
-## Packages required for the Ubuntu* 18.04 system
+## Packages Required for the Ubuntu* 18.04 System
 
     $ sudo apt install openjdk-11-jdk-headless
 
-## Running the demo on a single machine
+## Running the Demo on a Single Machine
 
 The demo consists of running a Rendezvous service, an Ownership service, and
 a simulated device in three separate terminal windows.
@@ -47,13 +47,13 @@ Terminal #4: Start the simulated device.
     $ cd device
     $ ./device
 
-When the demo finishes, the log files would be avaialble in respective folders.
+When the demo finishes, the log files would be available in respective folders.
 
-## Default key-types in the demo
+## Default key-types in the Demo
 
 * ECDSA NIST-256
 
-# Configuring the demo
+# Configuring the Demo
 
 Different properties used in the demo are specified in respective
 application.properties file. A brief description for each of these fields are
@@ -61,7 +61,7 @@ provided within the configuration file. For more details, please refer to the
 file application.properties.sample provided under 'pri' folder in source
 package.
 
-# Working with new Ownership Voucher/Ownership Credentials pairs
+# Working with new Ownership Voucher/Ownership Credentials Pairs
 
 New Ownership Vouchers/Ownership Credential pair can be generated using
 'SupplyChainTools'. Follow the related user guide to generate the new SDO
