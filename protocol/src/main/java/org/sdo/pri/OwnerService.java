@@ -8,6 +8,7 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.lang.Character;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpClient;
@@ -27,6 +28,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -303,6 +305,15 @@ public class OwnerService implements ProtocolService, Serializable {
     return myN6;
   }
 
+  private byte[] hexToBytes(final String appId) {
+    final byte[] appIdBytes = new byte[appId.length() / 2];
+    for (int i = 0; i < appId.length(); i += 2) {
+      appIdBytes[i / 2] = (byte) ((Character.digit(appId.charAt(i), 16) << 4)
+          + Character.digit(appId.charAt(i + 1), 16));
+    }
+    return appIdBytes;
+  }
+
   private ResourceBundle loadResourceBundle() {
     return ResourceBundle.getBundle(getClass().getPackageName() + ".OwnerService");
   }
@@ -541,6 +552,19 @@ public class OwnerService implements ProtocolService, Serializable {
     // in the voucher header.
     final boolean isVerified;
     if (devicePk instanceof EpidKey) {
+      // verify appId for EPID-based clients first
+      boolean isAppIdValid = false;
+      final byte[] proveDeviceAppId = to2ProveDevice.getAi();
+      for (final String appId : EpidConstants.appIdList) {
+        if (Arrays.equals(proveDeviceAppId, hexToBytes(appId))) {
+          isAppIdValid = true;
+          break;
+        }
+      }
+      if (!isAppIdValid) {
+        throw fail(ErrorCode.MessageRefused, to2ProveDevice.getType(),
+            loadResourceBundle().getString("ERR_INVALID_APPID"));
+      }
       try {
         final EpidLib epidLib = buildEpidLib();
         if (devicePk instanceof EpidKey10) {

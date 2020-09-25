@@ -8,6 +8,7 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.lang.Character;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpClient;
@@ -16,6 +17,7 @@ import java.security.GeneralSecurityException;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -193,6 +195,21 @@ public class RendezvousDeviceService implements ProtocolService, Serializable {
           loadResourceBundle().getString("ERR_NULL_PK_IN_PROVE"));
     }
 
+    // verify appId for EPID-based clients first
+    if (pk instanceof EpidKey) {
+      boolean isAppIdValid = false;
+      final byte[] proveDeviceAppId = to1ProveToSdo.getAi();
+      for (final String appId : EpidConstants.appIdList) {
+        if (Arrays.equals(proveDeviceAppId, hexToBytes(appId))) {
+          isAppIdValid = true;
+          break;
+        }
+      }
+      if (!isAppIdValid) {
+        throw fail(ErrorCode.MessageRefused, to1ProveToSdo.getType(),
+            loadResourceBundle().getString("ERR_INVALID_APPID"));
+      }
+    }
     final boolean isVerified;
     try {
       if (pk instanceof EpidKey10) {
@@ -260,6 +277,15 @@ public class RendezvousDeviceService implements ProtocolService, Serializable {
       }
     }
     return null;
+  }
+
+  private byte[] hexToBytes(final String appId) {
+    final byte[] appIdBytes = new byte[appId.length() / 2];
+    for (int i = 0; i < appId.length(); i += 2) {
+      appIdBytes[i / 2] = (byte) ((Character.digit(appId.charAt(i), 16) << 4)
+          + Character.digit(appId.charAt(i + 1), 16));
+    }
+    return appIdBytes;
   }
 
   private ResourceBundle loadResourceBundle() {
