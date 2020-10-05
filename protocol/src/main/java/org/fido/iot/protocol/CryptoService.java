@@ -580,6 +580,28 @@ public class CryptoService {
   }
 
   /**
+   * Verifies the public key in ownership voucher.
+   *
+   * @param ovPublicKeyHex hexadecimal string of public key hash
+   * @param allowList list of public key hash in allow list
+   * @param denyList list of public key hash in deny list
+   */
+  public boolean verifyOvPublicKeyHash(
+          String ovPublicKeyHex, List<String> allowList, List<String> denyList)
+          throws InvalidKeyException {
+    boolean verificationStatus = false;
+    if (denyList.indexOf(ovPublicKeyHex) != -1) {
+      throw new InvalidKeyException("OV Public Key hash is in denylist");
+    }
+    if (allowList.indexOf(ovPublicKeyHex) == -1) {
+      throw new InvalidKeyException("OV Public Key hash not found in allowlist");
+    } else {
+      verificationStatus = true;
+    }
+    return verificationStatus;
+  }
+
+  /**
    * Produces a COSE Signature.
    *
    * @param signingKey The signing key.

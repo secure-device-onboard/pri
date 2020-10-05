@@ -61,6 +61,22 @@ public class RvsDbManager {
 
       stmt.executeUpdate(sql);
 
+      sql = "CREATE TABLE IF NOT EXISTS "
+              + "OV_KEYS_ALLOWLIST("
+              + "PUBLIC_KEY_HASH CHAR(64), "
+              + "UNIQUE (PUBLIC_KEY_HASH) "
+              + ");";
+
+      stmt.executeUpdate(sql);
+
+      sql = "CREATE TABLE IF NOT EXISTS "
+              + "OV_KEYS_DENYLIST("
+              + "PUBLIC_KEY_HASH CHAR(64), "
+              + "UNIQUE (PUBLIC_KEY_HASH) "
+              + ");";
+
+      stmt.executeUpdate(sql);
+
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }

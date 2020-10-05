@@ -3,6 +3,9 @@
 
 package org.fido.iot.protocol;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Message Service Interface.
  */
@@ -23,6 +26,6 @@ public abstract class MessagingService {
    * @param reply The outgoing reply message.
    * @return True if the dispatching is done, otherwise false.
    */
-  public abstract boolean dispatch(Composite request, Composite reply);
-
+  public abstract boolean dispatch(Composite request, Composite reply)
+          throws NoSuchAlgorithmException, InvalidKeyException;
 }

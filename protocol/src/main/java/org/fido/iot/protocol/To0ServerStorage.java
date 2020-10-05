@@ -3,6 +3,8 @@
 
 package org.fido.iot.protocol;
 
+import java.util.List;
+
 /**
  * To0 Server Storage Interface.
  */
@@ -31,4 +33,28 @@ public interface To0ServerStorage extends StorageEvents {
    * @return The response wait time in seconds.
    */
   long storeRedirectBlob(Composite voucher, long requestedWait, byte[] signedBlob);
+
+  /**
+   * Gets the list of OV key hash in allowlist.
+   *
+   * @return
+   */
+  List<String> getOvKeysAllowlist();
+
+  /**
+   * Adds public key hash to allowlist DB.
+   */
+  void setOvKeysAllowlist();
+
+  /**
+   * Gets the list of OV key hash in denylist.
+   *
+   * @return
+   */
+  List<String> getOvKeysDenylist();
+
+  /**
+   * Adds public key hash to allowlist DB.
+   */
+  void setOvKeysDenylist();
 }

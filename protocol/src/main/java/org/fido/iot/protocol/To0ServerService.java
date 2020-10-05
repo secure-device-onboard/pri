@@ -3,7 +3,12 @@
 
 package org.fido.iot.protocol;
 
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.util.List;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * To0 Server message processing service.
@@ -25,7 +30,10 @@ public abstract class To0ServerService extends MessagingService {
     getStorage().started(request, reply);
   }
 
-  protected void doOwnerSign(Composite request, Composite reply) {
+  protected void doOwnerSign(Composite request, Composite reply)
+      throws NoSuchAlgorithmException, InvalidKeyException {
+    getStorage().setOvKeysAllowlist();
+    getStorage().setOvKeysDenylist();
     getStorage().continuing(request, reply);
 
     //read root message
@@ -58,6 +66,36 @@ public abstract class To0ServerService extends MessagingService {
       throw new InvalidOwnerSignBodyException();
     }
 
+    List<String> allowlistkeys = getStorage().getOvKeysAllowlist();
+    List<String> denylistkeys = getStorage().getOvKeysDenylist();
+
+    //Verifying Manufacturer Public key against allowlist and denylist
+    Composite publicKey = voucher.getAsComposite(Const.OV_HEADER).getAsComposite(Const.OVH_PUB_KEY);
+    PublicKey pub = cryptoService.decode(publicKey);
+    MessageDigest md = MessageDigest.getInstance(Const.SHA_256_ALG_NAME);
+    byte[] keyHash = md.digest(pub.getEncoded());
+    String hexHash = DatatypeConverter.printHexBinary(keyHash);
+
+    if (!cryptoService.verifyOvPublicKeyHash(hexHash, allowlistkeys, denylistkeys)) {
+      throw new InvalidOwnerSignBodyException();
+    }
+
+    //Verifying Owner public key against allowlist and denylist
+    Composite voucherEntries = voucher.getAsComposite(Const.OV_ENTRIES);
+    for (int i = 0; i < voucherEntries.size(); i++) {
+      Composite entry = voucherEntries.getAsComposite(voucherEntries.size() - 1);
+      Composite payload = Composite.fromObject(entry.getAsBytes(Const.COSE_SIGN1_PAYLOAD));
+      publicKey = payload.getAsComposite(Const.OVE_PUB_KEY);
+      pub = cryptoService.decode(publicKey);
+      md = MessageDigest.getInstance(Const.SHA_256_ALG_NAME);
+      keyHash = md.digest(pub.getEncoded());
+      hexHash = DatatypeConverter.printHexBinary(keyHash);
+
+      if (!cryptoService.verifyOvPublicKeyHash(hexHash, allowlistkeys, denylistkeys)) {
+        throw new InvalidOwnerSignBodyException();
+      }
+    }
+
     long requestedWait = to0d.getAsNumber(Const.TO0D_WAIT_SECONDS).longValue();
 
     long responseWait = getStorage().storeRedirectBlob(voucher, requestedWait, to1d.toBytes());
@@ -73,7 +111,8 @@ public abstract class To0ServerService extends MessagingService {
   }
 
   @Override
-  public boolean dispatch(Composite request, Composite reply) {
+  public boolean dispatch(Composite request, Composite reply)
+      throws NoSuchAlgorithmException, InvalidKeyException {
     switch (request.getAsNumber(Const.SM_MSG_ID).intValue()) {
       case Const.TO0_HELLO:
         doHello(request, reply);
@@ -88,5 +127,4 @@ public abstract class To0ServerService extends MessagingService {
         throw new RuntimeException(new UnsupportedOperationException());
     }
   }
-
 }
