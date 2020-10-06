@@ -10,27 +10,27 @@ build and assume familiarity with
 To build SDO, run `mvn package` from the root directory of the SDO source.
 The build creates files which will be used in the rest of this guide, including:
 
-`device/target/device-1.9.jar`
+`device/target/device-1.10-SNAPSHOT.jar`
 
 An implementation of the SDO Device described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  referred to in this document as 'the device', this JAR
 can be executed via the `java -jar` command.
 
-`owner/target/owner-1.9.war`
+`owner/target/owner-1.10-SNAPSHOT.war`
 
 An implementation of the SDO Owner Server described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  referred to in this document as 'the owner server', this WAR
 can be deployed in a servlet container like [Apache Tomcat](http://tomcat.apache.org/)
 or executed via the `java -jar` command.
 
-`rendezvous/target/rendezvous-1.9.war`
+`rendezvous/target/rendezvous-1.10-SNAPSHOT.war`
 
 An implementation of the SDO Rendezvous Server described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  Referred to in this document as 'the rendezvous server', this
 WAR can be deployed in a servlet container like [Apache Tomcat](http://tomcat.apache.org/)
 or executed via the `java -jar` command.
 
-`to0client/target/to0client-1.9.jar`
+`to0client/target/to0client-1.10-SNAPSHOT.jar`
 
 An implementation of the SDO Owner Client described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  Referred to in this document as 'the owner client', this JAR
