@@ -200,7 +200,8 @@ public class RendezvousApp extends SpringBootServletInitializer implements WebMv
   // If we don't have to verify EPID signatures, we don't need this.
   @Bean
   HttpClient httpClient() throws KeyManagementException, NoSuchAlgorithmException {
-    return HttpClient.newBuilder().sslContext(sslContext()).build();
+    return HttpClient.newBuilder().sslContext(sslContext())
+      .version(HttpClient.Version.HTTP_1_1).build();
   }
 
   private ProtocolService initRendezvousService(RendezvousDeviceService service)
