@@ -59,7 +59,8 @@ public class OwnerService implements ProtocolService, Serializable {
   private URL myEpidServiceUrl = EpidConstants.onlineEpidUrlDefault;
   private UUID myG3 = null;
   private transient Function<OwnershipVoucher, UUID> myG3Function = this::defaultG3;
-  private transient HttpClient myHttpClient = HttpClient.newBuilder().build();
+  private transient HttpClient myHttpClient = HttpClient.newBuilder()
+      .version(HttpClient.Version.HTTP_1_1).build();
   private boolean myIsDone = false;
   private KeyExchange myKeyExchange = null;
   private Nonce myN6 = null;
