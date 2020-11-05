@@ -12,7 +12,7 @@ The SDO out-of-the-box demo is organized according to the following directory st
         ├── owner        : Demo Owner
         └── rendezvous   : Demo Rendezvous service
 
-## Packages required for the Ubuntu* 18.04 system
+## Packages required for the Ubuntu* 20.04 system
 
     $ sudo apt install openjdk-11-jdk-headless
 
