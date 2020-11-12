@@ -32,7 +32,7 @@ class EpidOnlineMaterialTest {
   @Test
   @Disabled
   void test() throws Exception {
-    HttpClient c = HttpClient.newBuilder().build();
+    HttpClient c = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
     EpidOnlineMaterial e = new EpidOnlineMaterial(EpidConstants.sandboxEpidUrlDefault.toURI(), c);
     byte[] b = e.readEpidRestService(gid, EpidLib.EpidVersion.EPID_2_0, EpidLib.MaterialId.SIGRL);
     Assertions.assertArrayEquals(new byte[]{}, b);
