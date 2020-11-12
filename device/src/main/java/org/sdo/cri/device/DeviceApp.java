@@ -306,7 +306,8 @@ public class DeviceApp {
   // The HttpClient which SDO components will use for outgoing HTTP.
   @Bean
   HttpClient httpClient() throws Exception {
-    return HttpClient.newBuilder().sslContext(sslContext()).build();
+    return HttpClient.newBuilder().sslContext(sslContext())
+      .version(HttpClient.Version.HTTP_1_1).build();
   }
 
   // Loggers are handy for telling folks about stuff and junk.
