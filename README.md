@@ -62,7 +62,7 @@ This software supports the following key types:
 This guide will use ECDSA P-384 keys.
 
 Generate a key/certificate pair for the device and one for the owner.
-To do this with [OpenSSL* 1.1.1d](https://www.openssl.org/), type the following:
+To do this with [OpenSSL* 1.1.1g](https://www.openssl.org/), type the following:
 
 ```
 openssl ecparam -name secp384r1 -genkey -noout -out <YOUR KEY FILENAME HERE>
