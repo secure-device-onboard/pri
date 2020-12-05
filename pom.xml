@@ -10,7 +10,7 @@
 
   <artifactId>sdo</artifactId>
   <groupId>org.sdo</groupId>
-  <version>1.9</version>
+  <version>1.9.1</version>
   <name>SDO</name>
   <packaging>pom</packaging>
 
