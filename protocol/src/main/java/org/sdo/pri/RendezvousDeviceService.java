@@ -24,7 +24,8 @@ import java.util.UUID;
 public class RendezvousDeviceService implements ProtocolService, Serializable {
 
   private URL myEpidServiceUrl = EpidConstants.onlineEpidUrlDefault;
-  private transient HttpClient myHttpClient = HttpClient.newBuilder().build();
+  private transient HttpClient myHttpClient = HttpClient.newBuilder()
+      .version(HttpClient.Version.HTTP_1_1).build();
   private boolean myIsDone = false;
   private Nonce myN4 = null;
   private RedirectionEntry myRedirectionEntry = null;
