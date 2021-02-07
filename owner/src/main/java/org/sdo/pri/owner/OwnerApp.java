@@ -244,7 +244,8 @@ public class OwnerApp extends SpringBootServletInitializer implements WebMvcConf
   // If we don't have to verify EPID signatures, we don't need this.
   @Bean
   HttpClient httpClient() throws KeyManagementException, NoSuchAlgorithmException {
-    return HttpClient.newBuilder().sslContext(sslContext()).build();
+    return HttpClient.newBuilder().sslContext(sslContext())
+      .version(HttpClient.Version.HTTP_1_1).build();
   }
 
   // (Re)initialize the owner service with those transient bits of state

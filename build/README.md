@@ -4,7 +4,7 @@ Docker Script for Building PRI repository. Using this script you can build the l
 
 ## Prerequisites
 
-- Operating system: **Ubuntu 18.04.**
+- Operating system: **Ubuntu 20.04.**
 
 - Docker engine : **18.06.0**
 
