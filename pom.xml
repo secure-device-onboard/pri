@@ -37,7 +37,7 @@
     <maven-surefire-report-plugin.version>3.0.0-M5</maven-surefire-report-plugin.version>
     <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
     <project-demo-directory>../demo</project-demo-directory>
-    <tomcat.version>9.0.46</tomcat.version>
+    <tomcat.version>9.0.52</tomcat.version>
   </properties>
 
   <modules>
