@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.sdo</groupId>
     <artifactId>sdo</artifactId>
-    <version>1.10.4-SNAPSHOT</version>
+    <version>1.10.4</version>
     <relativePath>..</relativePath>
   </parent>
 
@@ -46,7 +46,7 @@
     <dependency>
       <groupId>org.sdo</groupId>
       <artifactId>protocol</artifactId>
-      <version>1.10.4-SNAPSHOT</version>
+      <version>1.10.4</version>
     </dependency>
 
     <dependency>
@@ -70,6 +70,12 @@
             <artifactId>log4j-api</artifactId>
           </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j.version}</version>
     </dependency>
 
   </dependencies>
