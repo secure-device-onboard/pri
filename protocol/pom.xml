@@ -26,8 +26,8 @@
   mvn versions:update-properties
   -->
   <properties>
-    <bcprov-jdk15on.version>1.68</bcprov-jdk15on.version>
-    <bcpkix-jdk15on.version>1.68</bcpkix-jdk15on.version>
+    <bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
+    <bcpkix-jdk15on.version>1.70</bcpkix-jdk15on.version>
   </properties>
 
   <dependencies>
