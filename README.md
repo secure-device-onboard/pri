@@ -12,27 +12,27 @@ build and assume familiarity with
 To build SDO, run `mvn package` from the root directory of the SDO source.
 The build creates files which will be used in the rest of this guide, including:
 
-`device/target/device-1.10.7.jar`
+`device/target/device-1.10.8-SNAPSHOT.jar`
 
 An implementation of the SDO Device described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  referred to in this document as 'the device', this JAR
 can be executed via the `java -jar` command.
 
-`owner/target/owner-1.10.7.war`
+`owner/target/owner-1.10.8-SNAPSHOT.war`
 
 An implementation of the SDO Owner Server described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  referred to in this document as 'the owner server', this WAR
 can be deployed in a servlet container like [Apache Tomcat](http://tomcat.apache.org/)
 or executed via the `java -jar` command.
 
-`rendezvous/target/rendezvous-1.10.7.war`
+`rendezvous/target/rendezvous-1.10.8-SNAPSHOT.war`
 
 An implementation of the SDO Rendezvous Server described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  Referred to in this document as 'the rendezvous server', this
 WAR can be deployed in a servlet container like [Apache Tomcat](http://tomcat.apache.org/)
 or executed via the `java -jar` command.
 
-`to0client/target/to0client-1.10.7.jar`
+`to0client/target/to0client-1.10.8-SNAPSHOT.jar`
 
 An implementation of the SDO Owner Client described in the Secure Device Onboard Protocol
 Specification v1.13b, section 2.3.  Referred to in this document as 'the owner client', this JAR
@@ -240,7 +240,7 @@ you built in a previous step.
 For example:
 
 ```
-$ java -jar rendezvous/target/rendezvous-1.10.7.war
+$ java -jar rendezvous/target/rendezvous-1.10.8-SNAPSHOT.war
 2020-03-13 11:52:49.981  INFO 12148 --- [           main] org.rendezvous.RendezvousApp   : Starting RendezvousApp
 ...
 2020-03-13 11:52:55.170  INFO 12148 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8040 (http) with context path ''
@@ -302,7 +302,7 @@ you built in a previous step.
 For example:
 
 ```
-$ java -jar owner/target/owner-1.10.7.war
+$ java -jar owner/target/owner-1.10.8-SNAPSHOT.war
 Picked up _JAVA_OPTIONS: -Djava.net.preferIPv4Stack=true
 2020-03-13 12:08:16.769  INFO 3524 --- [           main] org.sdo.owner.OwnerApp             : Starting OwnerApp
 ...
@@ -328,7 +328,7 @@ The device will run the Device Initialization (DI) protocol and exit.
 For example:
 
 ```
-$ java -jar device/target/device-1.10.7.jar
+$ java -jar device/target/device-1.10.8-SNAPSHOT.jar
 Picked up _JAVA_OPTIONS: -Djava.net.preferIPv4Stack=true
 2020-03-13 12:16:10.726  INFO 3032 --- [           main] org.sdo.device.DeviceApp           : Starting DeviceApp
 ...
@@ -400,7 +400,7 @@ Replace the text `<YOUR OWNER INPUT HERE>` with the path of your working directo
 For example:
 
 ```
-$ java -jar target/to0client-1.10.7.jar ./sdo-data/readme.op
+$ java -jar target/to0client-1.10.8-SNAPSHOT.jar ./sdo-data/readme.op
 Picked up _JAVA_OPTIONS: -Djava.net.preferIPv4Stack=true
 2020-03-13 12:16:21.830  INFO 17300 --- [           main] org.sdo.to0client.To0ClientApp     : Starting To0ClientApp
 ...
@@ -431,7 +431,7 @@ you built in a previous step.
 For example:
 
 ```
-$ java -Dorg.sdo.device.credentials=./sdo-data/616d5ba0-d139-426f-9cbf-4997d644268a.oc -jar device/target/device-1.10.7.jar
+$ java -Dorg.sdo.device.credentials=./sdo-data/616d5ba0-d139-426f-9cbf-4997d644268a.oc -jar device/target/device-1.10.8-SNAPSHOT.jar
 2020-03-13 12:16:28.544  INFO 14368 --- [           main] org.sdo.device.DeviceApp           : Starting DeviceApp
 ...
 2020-03-13 12:16:33.996  INFO 14368 --- [           main] org.sdo.device.DeviceApp           : device onboarding ends
