@@ -28,7 +28,6 @@
   <properties>
     <spring-boot.version>2.7.8</spring-boot.version>
     <log4j.version>2.17.1</log4j.version>
-    <snakeyaml.version>1.33</snakeyaml.version>
     <jackson-databind.version>2.13.4.2</jackson-databind.version>
   </properties>
 
@@ -60,10 +59,6 @@
           <artifactId>log4j-to-slf4j</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.yaml</groupId>
-          <artifactId>snakeyaml</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-databind</artifactId>
         </exclusion>
@@ -80,12 +75,6 @@
             <artifactId>log4j-api</artifactId>
           </exclusion>
       </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
-      <version>${snakeyaml.version}</version>
     </dependency>
 
     <dependency>
